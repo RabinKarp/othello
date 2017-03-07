@@ -1,5 +1,9 @@
 Caltech CS2 Assignment 9: Othello
 
-File changed for the sake of a commit!
+I implemented my code in java - so please run the Java makefile.
+
+TestPlayer is the first part of the assignment that implements a randomly-playing AI.
+ThinkingPlayer implements the Heuristic
+MinimaxPlayer implements a 2-ply minimax algorithm.
 
 See [assignment9_part1.html](http://htmlpreview.github.io/?https://github.com/caltechcs2/othello/blob/master/assignment9_part1.html) and [assignment9_part2.html](http://htmlpreview.github.io/?https://github.com/caltechcs2/othello/blob/master/assignment9_part2.html)
