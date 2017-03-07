@@ -39,8 +39,36 @@ class ThinkingPlayer implements OthelloPlayer
             for(int j = 0; j < 8; j++) {
                 Move m = new Move(i, j);
                 if(board.checkMove(m, side)) {
+                    int score = 1;
+                    if((i == 0 && j == 0)
+                        || (i == 0 && j == 7)
+                        || (i == 7 && j == 0)
+                        || (i == 7 && j == 7))
+                    {
+                        score *= 10;
+                    }
+                    else if((i > 1 && i < 6 && j == 0)
+                        || (i > 1 && i < 6 && j == 7)
+                        || (j > 1 && j < 6 && i == 0)
+                        || (j > 1 && j < 6 && j == 7))
+                    {
+                        score *= 5;
+                    }
+                    else if((i == 0 && (j == 1 || j == 6))
+                            || (i == 7 && (j == 1 || j == 6))
+                            || (j == 0 && (i == 1 || i == 6))
+                            || (j == 7 && (i == 1 || i == 6)))
+                    {
+                        score *= -1;
+                    }
+                    else if((i == 1 && j == 1)
+                            || (i == 1 && j == 6)
+                            || (i == 6 && j == 1)
+                            || (i == 6 && j == 6))
+                    {
+                        score *= -10;
+                    }
 
-                    int score = 0;
 
                     if(maxMove == null || score > maxScore) {
                         maxScore = score;
