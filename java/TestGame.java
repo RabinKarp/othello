@@ -6,7 +6,7 @@ public class TestGame {
             String s
                 = "\nUsage: TestGame BLACK WHITE [TIMELIMIT]\n"
                 + "  BLACK/WHITE - c++ program name or:\n"
-                + "    SimplePlayer, ConstantTimePlayer, BetterPlayer - AIs\n"
+                + "    SimplePlayer, ConstantTimePlayer, BetterPlayer, TestPlayer, ThinkingPlayer - AIs\n"
                 + "    Human - manual input\n"
                 + "  TIMELIMIT - optional timelimit for each player in milliseconds:\n";                           
             System.out.println(s);
@@ -25,6 +25,10 @@ public class TestGame {
                 players[i] = new BetterPlayer();
             } else if (args[i].equalsIgnoreCase("Human")) {
                 players[i] = new OthelloDisplay(which++);
+            }  else if (args[i].equalsIgnoreCase("TestPlayer")) {
+                players[i] = new RandomPlayer();
+            }  else if (args[i].equalsIgnoreCase("ThinkingPlayer")) {
+                players[i] = new ThinkingPlayer();
             } else {
                 players[i] = new WrapperPlayer(args[i]);
             }             
