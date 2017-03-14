@@ -1,8 +1,3 @@
-/**
- * The RandomPlayer class implements an AI that just plays randomly, selecting
- * a move at random from all of the moves available to it.
- */
-
 import java.util.*;
 
 class ThinkingPlayer implements OthelloPlayer

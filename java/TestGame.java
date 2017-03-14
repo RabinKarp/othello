@@ -7,7 +7,7 @@ public class TestGame {
                 = "\nUsage: TestGame BLACK WHITE [TIMELIMIT]\n"
                 + "  BLACK/WHITE - c++ program name or:\n"
                 + "    SimplePlayer, ConstantTimePlayer, BetterPlayer, TestPlayer (Plays Randomly)" +
-                    ", ThinkingPlayer (Plays with a Heuristic), MinimaxPlayer - AIs\n"
+                    ", ThinkingPlayer (Plays with a Heuristic), MinimaxPlayer, AlphaBetaPlayer - AIs\n"
                 + "    Human - manual input\n"
                 + "  TIMELIMIT - optional timelimit for each player in milliseconds:\n";                           
             System.out.println(s);
@@ -32,6 +32,8 @@ public class TestGame {
                 players[i] = new ThinkingPlayer();
             } else if (args[i].equalsIgnoreCase("MinimaxPlayer")) {
                 players[i] = new MinimaxPlayer();
+            } else if (args[i].equalsIgnoreCase("AlphaBetaPlayer")) {
+                players[i] = new AlphaBetaPlayer();
             }
             else {
                 players[i] = new WrapperPlayer(args[i]);

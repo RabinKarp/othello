@@ -1,12 +1,19 @@
 import java.util.*;
 
-class MinimaxPlayer implements OthelloPlayer
+class AlphaBetaPlayer implements OthelloPlayer
 {
+    int[][] PositionWeights = new int[]{{0, 0, 5},
+            {0,7,5},
+            {7,0,5},
+            {7,0,5},
+            {7,7,5},
+            {7,7,5}
+    };
     OthelloBoard board;
     OthelloSide side;
-    final int DEPTH = 2;
+    final int DEPTH = 3;
 
-    public MinimaxPlayer()
+    public AlphaBetaPlayer()
     {
         side = null;
         board = new OthelloBoard();
@@ -27,28 +34,41 @@ class MinimaxPlayer implements OthelloPlayer
             return null;
         }
 
-        MoveScore best = minMaxMove(board, DEPTH);
+        MoveScore best = alphaBetaMove(board, DEPTH, -Integer.MAX_VALUE, Integer.MAX_VALUE);
 
         board.move(best.move, side);
         return best.move;
     }
 
-    private MoveScore minMaxMove(OthelloBoard b, int depth) {
+    /**
+     * Serves the function of a struct that contains a move and its associated minimax score
+     */
+    private class MoveScore {
+        public Move move;
+        public int score;
+
+        public MoveScore(Move m, int s) {
+            move = m;
+            score = s;
+        }
+    }
+
+    private MoveScore alphaBetaMove(OthelloBoard board, int depth, int a, int b) {
 
         if(depth == 0) {
-            return new MoveScore(new Move(0, 0), computeScore(b));
+            return new MoveScore(new Move(0, 0), computeScore(board));
         }
 
-        ArrayList<Move> moves = getValidMoves(b, side);
+        ArrayList<Move> moves = getValidMoves(board, side);
         MoveScore max = new MoveScore(new Move(0, 0), -Integer.MAX_VALUE / 2);
 
         for(Move m : moves) {
-
+            int beta = b;
             int i = m.getX();
             int j = m.getY();
 
             int min = Integer.MAX_VALUE;
-            OthelloBoard cpy1 = b.copy();
+            OthelloBoard cpy1 = board.copy();
             cpy1.move(m, side);
             ArrayList<Move> oMoves = getValidMoves(cpy1, side.opposite());
 
@@ -56,14 +76,20 @@ class MinimaxPlayer implements OthelloPlayer
                 OthelloBoard cpy2 = cpy1.copy();
                 cpy2.move(o, side.opposite());
 
-                MoveScore next = minMaxMove(cpy2, depth-1);
+                MoveScore next = alphaBetaMove(cpy2, depth-1, a, beta);
                 min = Math.min(next.score, min);
+                beta = Math.min(beta, next.score);
+                if(beta <= a)
+                    break;
             }
 
             if(min >= max.score) {
                 max.move = m;
                 max.score = min;
+                a = Math.max(a, min);
             }
+            if(b <= a)
+                break;
         }
         return max;
     }
@@ -88,18 +114,5 @@ class MinimaxPlayer implements OthelloPlayer
         }
 
         return moves;
-    }
-
-    /**
-     * Serves the function of a struct that contains a move and its associated minimax score
-     */
-    private class MoveScore {
-        public Move move;
-        public int score;
-
-        public MoveScore(Move m, int s) {
-            move = m;
-            score = s;
-        }
     }
 }
